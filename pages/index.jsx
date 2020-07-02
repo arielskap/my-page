@@ -6,17 +6,27 @@ import styles from '../public/assets/styles/index.module.css'
 
 
 export default () => {
-  const translateYTop = useSpring({
-    delay: 3000,
-    config: {duration: 3000, easing: easeCubic},
-    to: {transform: 'translateY(-100%)'},
-    from: { transform: 'translateY(0%)' },
-  })
-  const translateYBottom = useSpring({
-    delay: 3000,
-    config: {duration: 3000, easing: easeCubic},
-    to: {transform: 'translateY(100%)'},
-    from: { transform: 'translateY(0%)' },
+  const [translateYTop, setTranslateYTop] = useSpring(() => ({transform: 'translateY(0%)'}))
+  const [translateYBottom, setTranslateYBottom] = useSpring(() => ({transform: 'translateY(0%)'}))
+  const rotate = useSpring({
+    config: {duration: 1000},
+    to: {transform: 'rotate(180deg)'},
+    from: {transform: 'rotate(0deg)'},
+    onRest: () => {
+      setTranslateYTop({
+        delay: 1000,
+        config: {duration: 2000, easing: easeCubic},
+        to: {transform: 'translateY(-100%)'},
+      })
+      setTranslateYBottom({
+        delay: 1000,
+        config: {duration: 2000, easing: easeCubic},
+        to: {transform: 'translateY(100%)'},
+        onRest: () => {
+          document.querySelector('.door').classList.replace('flex', 'hidden');
+        }
+      })
+    }
   })
   useEffect(() => {
     const txt = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione repudiandae quas atque, culpa tenetur magni repellendus eum illo rerum autem, maxime reiciendis vitae architecto aliquid laudantium voluptas perferendis eveniet quam!Delectus similique nemo beatae iusto dolores facilis possimus suscipit nesciunt natus dolorum optio ratione veritatis, soluta iste officiis fugit, tempore dolorem odio in? Ipsam est provident numquam quae, enim cupiditate.'
@@ -27,8 +37,11 @@ export default () => {
   }, [])
   return (
     <div>
-      <div className='absolute top-0 left-0 h-screen w-screen z-10'>
-        <animated.div className={`relative bg-red-700 w-screen h-screen ${styles.doorTop}`} style={translateYTop} />
+      <div className='door absolute top-0 left-0 h-screen w-screen z-10 overflow-hidden flex justify-center items-center'>
+        <animated.div className={`absolute bg-red-700 w-screen h-screen ${styles.doorTop}`} style={translateYTop} />
+        <div className='bg-blue-700 w-20 h-20 z-20 rounded-full'>
+          <animated.div className={`w-full h-full bg-orange-700 rounded-full ${styles.circle}`} style={rotate} />
+        </div>
         <animated.div className={`absolute bg-white bottom-0 w-screen h-screen ${styles.doorBottom}`} style={translateYBottom}/>
       </div>
       <div className={`${styles.bgEarth} bg-no-repeat bg-fixed min-h-screen flex justify-center items-center`}>
