@@ -14,6 +14,7 @@
   "dependencies": {
     "d3-ease": "^1.0.6",
     "next": "^9.4.4",
+    "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-spring": "^8.0.27",
@@ -22,11 +23,14 @@
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-async-to-generator": "^7.10.4",
+    "@zeit/next-css": "^1.0.1",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.3.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.5",
+    "next-purgecss": "^4.0.0",
     "postcss-import": "^12.0.1",
     "postcss-preset-env": "^6.7.0",
     "postcss-sort-media-queries": "^1.6.24",

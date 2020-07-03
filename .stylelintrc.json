@@ -8,7 +8,6 @@
         "import"
       ]
     }],
-    "block-no-empty": null,
-    "unit-whitelist": ["em", "rem", "s", "%"]
+    "block-no-empty": null
   }
 }
