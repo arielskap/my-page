@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useSpring, animated, interpolate } from 'react-spring'
-import Typed from 'typed.js'
 import styles from '../public/assets/styles/index.module.css'
 import Layout from '../components/Layout'
+import RadialChart from '../components/RadialChart'
+import TypedText from '../components/Typed'
 
 export default () => {
   const [ openDoor, setOpenDoor ] = useState(false)
-  const [closeDoor, setCloseDoor] = useState(process.browser && sessionStorage.getItem('apertura'))
+  const [closeDoor, setCloseDoor] = useState(false)
+  const [showSkills, setShowSkills] = useState(false)
   const { rotate, translateYTop, translateYBottom, opacity } = useSpring({
     config: { mass: 30, tension: 280, friction: 120 },
     to: async (next) => {
@@ -18,19 +20,16 @@ export default () => {
     from: { rotate: '0deg', translateYTop: '0%', translateYBottom: '0%', opacity: 1 },
     onRest: () => {
       setCloseDoor(true)
+      sessionStorage.setItem('apertura', 'true')
     }
   })
 
   useEffect(() => {
-    const txt = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione repudiandae quas atque, culpa tenetur magni repellendus eum illo rerum autem, maxime reiciendis vitae architecto aliquid laudantium voluptas perferendis eveniet quam!Delectus similique nemo beatae iusto dolores facilis possimus suscipit nesciunt natus dolorum optio ratione veritatis, soluta iste officiis fugit, tempore dolorem odio in? Ipsam est provident numquam quae, enim cupiditate.'
-    const typed = new Typed('#box-text', {
-      strings: ['loading data...', txt],
-      typeSpeed: 10
-    });
+    setCloseDoor(sessionStorage.getItem('apertura'))
   }, [])
 
   return (
-    <Layout title='Index'>
+    <Layout title='About Me'>
       {!closeDoor && (
         <div className='GrandDoor absolute top-0 left-0 h-screen w-screen z-10 overflow-hidden flex justify-center items-center'>
           <animated.div className={`top-0 left-0 absolute w-screen h-screen ${styles.doorTop}`} style={{transform: translateYBottom.interpolate((translateYBottom) => `translateY(${translateYBottom})`)}} />
@@ -44,24 +43,38 @@ export default () => {
           <animated.div className={`absolute bg-white bottom-0 w-screen h-screen ${styles.doorBottom}`} style={{transform: translateYTop.interpolate((translateYTop) => `translateY(${translateYTop})`)}} />
         </div>
       )}
-      <div className={`${styles.bgEarth} bg-no-repeat bg-fixed min-h-screen flex justify-center items-center`}>
+      <div className={`${styles.bgEarth} bg-no-repeat bg-fixed min-h-screen flex justify-center items-center text-white`}>
         <div className={`fixed top-0 left-0 w-full bg-black ${styles.redBox} h-8`}>
           <div className='relative w-full h-full'>
-            <div className={`absolute ${styles.topBox} bg-black text-white w-24`}>
-              <p className='text-center'>helloWorld.com</p>
+            <div className={`absolute ${styles.topBox} bg-black w-48`}>
+              <p className='text-center'>React Front-End Developer</p>
             </div>
           </div>
         </div>
-        <div className={`${styles.redBox} relative bg-black ${styles.bgOpacity90} rounded-lg p-6 max-w-lg mx-6`}>
-          <img className={`${styles.boxImg} object-contain float-left w-20 mr-4 mt-2 rounded-lg`} src='/assets/static/iam.jpg' alt='' />
+        <div className={`${styles.redBox} relative bg-black ${styles.bgOpacity90} rounded-lg p-6 max-w-lg mx-6 transition-all ease-in duration-300`}>
           <div>
-            <span id='box-text' className={`${styles.boxText} text-lg text-white`} />
+            {showSkills ? (
+            <div>
+              <RadialChart />
+            </div>
+            ): (
+              <>
+                <img className={`${styles.boxImg} object-contain float-left w-20 mr-4 mt-2 rounded-lg`} src='/assets/static/iam.jpg' alt='Soy yo' />
+                <div>
+                  <TypedText showSkills={showSkills} />
+                </div>
+              </>
+            )}
+          </div>
+          <div className='text-right'>
+            <div>
+              <button type='button' className='border-2 border-red-700 py-1 px-3 rounded-lg' onClick={() => setShowSkills(!showSkills)}>{showSkills ? 'Objetive' : 'Skills'}</button>
+            </div>
           </div>
         </div>
-        <div className={`fixed bottom-0 left-0 w-full grid grid-cols-3 divide-x divide-red-800 bg-black text-white h-16 ${styles.redBox}`}>
+        <div className={`fixed bottom-0 left-0 w-full grid grid-cols-2 divide-x divide-red-800 bg-black h-16 ${styles.redBox}`}>
           <button type='button'>Proyects</button>
-          <button type='button'>Github</button>
-          <button type='button'>Lenkedin</button>
+          <button type='button'>Redes</button>
         </div>
       </div>
     </Layout>

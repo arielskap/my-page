@@ -12,6 +12,7 @@
   "author": "Ariel Villarreal <arielvillagu@hotmail.com>",
   "license": "MIT",
   "dependencies": {
+    "chart.js": "^2.9.3",
     "d3-ease": "^1.0.6",
     "next": "^9.4.4",
     "nprogress": "^0.2.0",
