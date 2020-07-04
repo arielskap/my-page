@@ -8,6 +8,10 @@ body {
   font-family: 'Oswald', sans-serif;
 }
 
+button:focus {
+  outline: 0;
+}
+
 .typed-cursor {
   color: white;
   opacity: 1;
