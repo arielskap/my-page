@@ -60,9 +60,13 @@ const Index = () => {
                 </>
               )}
             </div>
-            <div className='text-right'>
-              <div>
-                <button type='button' className='border-2 border-red-700 py-1 px-3 rounded-lg' onClick={()=> setChangeContent(!changeContent)}>{showSkills ? 'Objetive' : 'Skills'}</button>
+            <div>
+              <div className='flex justify-end'>
+                {/*<button type='button' className='border-2 border-red-700 py-1 px-3 rounded-lg' onClick={()=> setChangeContent(!changeContent)}>{showSkills ? 'Objetive' : 'Skills'}</button>*/}
+                <button type='button' className='text-blue-700 flex hover:underline' onClick={()=> setChangeContent(!changeContent)}>
+                  {showSkills ? 'Objetive' : 'Skills'}
+                  <img className='object-contain w-6 h-full ml-2' src='assets/static/right-arrow.svg' alt='Right arrow' />
+                </button>
               </div>
             </div>
           </div>
